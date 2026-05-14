@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Atlas Solutions — Tecnología y Consultoría para empresas que quieren crecer."/>
+  <title>Atlas Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:      #0b1f3a;
+      --navy-mid:  #122a50;
+      --navy-pale: #e8eef7;
+      --white:     #ffffff;
+      --off-white: #f5f8fd;
+      --cyan:      #3ecfcf;
+      --cyan-dim:  rgba(62,207,207,0.15);
+      --cyan-glow: rgba(62,207,207,0.35);
+      --muted:     rgba(255,255,255,0.55);
+      --ll:        rgba(255,255,255,0.1);
+      --ld:        rgba(11,31,58,0.12);
+      --gray:      #6b7280;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--navy); font-family: 'Outfit', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* LANG TOGGLE */
+    .lang-toggle { position: fixed; bottom: 2rem; right: 2rem; z-index: 500; display: flex; background: var(--navy); border: 1px solid rgba(62,207,207,0.3); overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .lang-btn { padding: 0.55rem 1rem; font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border: none; background: transparent; color: rgba(255,255,255,0.4); transition: background 0.25s, color 0.25s; }
+    .lang-btn.active { background: var(--cyan); color: var(--navy); font-weight: 600; }
+    .lang-divider { width: 1px; background: rgba(62,207,207,0.2); }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.6rem 5rem; display: flex; align-items: center; justify-content: space-between; transition: padding 0.4s, background 0.4s, border-color 0.4s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(11,31,58,0.96); backdrop-filter: blur(16px); border-color: var(--ll); padding: 1rem 5rem; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+    .nav-logo span { color: var(--cyan); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); cursor: pointer; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); background: var(--cyan); border: none; padding: 0.6rem 1.5rem; cursor: pointer; transition: background 0.25s, box-shadow 0.25s; }
+    .nav-cta:hover { background: #5edede; box-shadow: 0 0 20px var(--cyan-glow); }
+
+    /* HERO */
+    #hero { min-height: 100vh; background: var(--navy); display: flex; align-items: center; padding: 0 5rem; position: relative; overflow: hidden; }
+    .hero-dots { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(62,207,207,0.18) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse 55% 65% at 88% 50%, black 0%, transparent 68%); -webkit-mask-image: radial-gradient(ellipse 55% 65% at 88% 50%, black 0%, transparent 68%); }
+    .hero-orb { position: absolute; right: 6%; top: 50%; transform: translateY(-50%); width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle at 38% 38%, rgba(62,207,207,0.18), rgba(26,58,107,0.45) 55%, transparent 75%); animation: orbPulse 7s ease-in-out infinite; }
+    .hero-orb::before { content: ''; position: absolute; inset: 20px; border-radius: 50%; border: 1px solid rgba(62,207,207,0.2); }
+    .hero-orb::after  { content: ''; position: absolute; inset: 80px; border-radius: 50%; border: 1px dashed rgba(62,207,207,0.1); animation: spin 35s linear infinite; }
+    @keyframes orbPulse { 0%,100% { box-shadow: 0 0 60px rgba(62,207,207,0.07); } 50% { box-shadow: 0 0 120px rgba(62,207,207,0.2); } }
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes blink   { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+    @keyframes fadeUp  { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.8rem; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
+    .edot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 2s infinite; }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6.5vw, 5.5rem); font-weight: 700; line-height: 1.05; color: var(--white); letter-spacing: -0.02em; margin-bottom: 1.8rem; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; }
+    h1 em { font-style: italic; font-weight: 400; color: var(--cyan); }
+    .hero-sub { font-size: 1rem; line-height: 1.8; color: var(--muted); max-width: 480px; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; }
+    .hero-actions { display: flex; gap: 1.2rem; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
+    .btn-p { font-family: 'Outfit', sans-serif; background: var(--cyan); color: var(--navy); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.95rem 2.2rem; border: none; cursor: pointer; transition: background 0.25s, box-shadow 0.25s; }
+    .btn-p:hover { background: #5edede; box-shadow: 0 0 28px var(--cyan-glow); }
+    .btn-o { font-family: 'Outfit', sans-serif; border: 1px solid rgba(255,255,255,0.2); color: var(--white); background: transparent; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.95rem 2.2rem; cursor: pointer; transition: border-color 0.25s, color 0.25s; }
+    .btn-o:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* SECTIONS */
+    section { padding: 7rem 5rem; }
+    .sec-label { display: inline-flex; align-items: center; gap: 10px; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cyan); margin-bottom: 14px; font-weight: 500; }
+    .sec-label::before { content: ''; width: 26px; height: 2px; background: var(--cyan); display: block; }
+    h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.1; }
+    h2 em { font-style: italic; font-weight: 400; color: var(--cyan); }
+
+    /* SERVICES */
+    #services { background: var(--navy); }
+    #services h2 { color: var(--white); margin-bottom: 3.5rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .sc { background: rgba(255,255,255,0.03); border: 1px solid var(--ll); padding: 2.2rem; position: relative; overflow: hidden; transition: background 0.3s, border-color 0.3s, transform 0.3s; }
+    .sc:hover { background: rgba(62,207,207,0.07); border-color: rgba(62,207,207,0.28); transform: translateY(-4px); }
+    .sc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--cyan), transparent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+    .sc:hover::before { transform: scaleX(1); }
+    .sc-num { font-family: 'Playfair Display', serif; font-size: 0.72rem; color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 1.5rem; opacity: 0.6; }
+    .sc h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.7rem; line-height: 1.25; }
+    .sc p  { font-size: 0.83rem; line-height: 1.75; color: rgba(255,255,255,0.42); margin: 0; }
+
+    /* VALUES */
+    #values { background: var(--off-white); }
+    #values h2 { margin-bottom: 3.5rem; }
+    .values-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+    .vc { background: var(--white); padding: 2rem 1.8rem; border-bottom: 3px solid transparent; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+    .vc:hover { border-color: var(--cyan); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(11,31,58,0.08); }
+    .vc:hover .vn { color: var(--cyan); }
+    .vn { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--navy-pale); line-height: 1; margin-bottom: 1.2rem; transition: color 0.3s; }
+    .vc h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .vc p  { font-size: 0.8rem; line-height: 1.7; color: var(--gray); margin: 0; }
+
+    /* CONTACT */
+    #contact { background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; margin-top: 3.5rem; }
+    .contact-left h2 { color: var(--navy); }
+    .contact-left p { margin-top: 1.2rem; font-size: 0.95rem; line-height: 1.85; color: var(--gray); }
+    .cinfo { display: flex; align-items: center; gap: 10px; margin-top: 1.8rem; font-size: 0.85rem; color: var(--gray); }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: #9ca3af; margin-bottom: 6px; font-weight: 500; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--off-white); border: 1px solid #e5e7eb; color: var(--navy); padding: 0.85rem 1.1rem; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 300; outline: none; resize: vertical; appearance: none; -webkit-appearance: none; transition: border-color 0.25s, background 0.25s, box-shadow 0.25s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cyan); background: var(--white); box-shadow: 0 0 0 3px rgba(62,207,207,0.1); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #c1c8d4; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-submit { width: 100%; background: var(--navy); color: var(--white); border: none; padding: 0.95rem; font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; margin-top: 8px; transition: background 0.3s, color 0.3s, box-shadow 0.3s; }
+    .btn-submit:hover { background: var(--cyan); color: var(--navy); box-shadow: 0 0 28px var(--cyan-glow); }
+    .btn-submit.sent { background: #1a7a4a; color: var(--white); }
+
+    /* FOOTER */
+    footer { background: #060e1c; padding: 2rem 5rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.65); }
+    .footer-logo span { color: var(--cyan); }
+    footer p { font-size: 0.75rem; color: rgba(255,255,255,0.22); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s, transform 0.75s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav, nav.scrolled { padding-left: 2rem; padding-right: 2rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 2rem; }
+      #hero { padding: 0 2rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .services-grid, .values-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      h1 { font-size: 2.5rem; }
+      .lang-toggle { bottom: 1rem; right: 1rem; }
+      .hero-orb { width: 280px; height: 280px; right: -60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LANG TOGGLE -->
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnES" onclick="setLang('es')">ES</button>
+  <div class="lang-divider"></div>
+  <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Atlas<span>.</span></div>
+  <ul class="nav-links">
+    <li><a onclick="go('services')" data-es="Servicios"  data-en="Services">Servicios</a></li>
+    <li><a onclick="go('values')"   data-es="Valores"    data-en="Values">Valores</a></li>
+    <li><a onclick="go('contact')"  data-es="Contacto"   data-en="Contact">Contacto</a></li>
+  </ul>
+  <button class="nav-cta" onclick="go('contact')" data-es="Contáctanos" data-en="Get in Touch">Contáctanos</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="edot"></div><span data-es="Tecnología &amp; Consultoría" data-en="Technology &amp; Consulting">Tecnología &amp; Consultoría</span></div>
+    <h1>
+      <span data-es="Soluciones que llevan tu" data-en="Solutions that carry your">Soluciones que llevan tu</span><br>
+      <em data-es="negocio" data-en="business">negocio</em><br>
+      <span data-es="más lejos." data-en="further.">más lejos.</span>
+    </h1>
+    <p class="hero-sub" data-es="Ayudamos a empresas a transformarse digitalmente, optimizar sus operaciones y crecer con confianza a través de soluciones tecnológicas inteligentes." data-en="We help businesses transform digitally, optimize operations, and grow with confidence through smart technology solutions.">
+      Ayudamos a empresas a transformarse digitalmente, optimizar sus operaciones y crecer con confianza a través de soluciones tecnológicas inteligentes.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-p" onclick="go('services')" data-es="Ver Servicios"  data-en="Our Services">Ver Servicios</button>
+      <button class="btn-o" onclick="go('contact')"  data-es="Contáctanos"   data-en="Contact Us">Contáctanos</button>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal">
+    <div class="sec-label" data-es="Lo Que Hacemos" data-en="What We Do">Lo Que Hacemos</div>
+    <h2><span data-es="Servicios diseñados para" data-en="Services designed for">Servicios diseñados para</span> <em data-es="resultados reales." data-en="real results.">resultados reales.</em></h2>
+  </div>
+  <div class="services-grid" style="margin-top:3.5rem">
+    <div class="sc reveal d1">
+      <div class="sc-num">01</div>
+      <h3 data-es="Transformación Digital" data-en="Digital Transformation">Transformación Digital</h3>
+      <p data-es="Guiamos a tu empresa en la adopción de tecnología moderna con una estrategia clara y alineada a tus objetivos." data-en="We guide your company in adopting modern technology with a clear strategy aligned to your goals.">Guiamos a tu empresa en la adopción de tecnología moderna con una estrategia clara y alineada a tus objetivos.</p>
+    </div>
+    <div class="sc reveal d2">
+      <div class="sc-num">02</div>
+      <h3 data-es="Analítica e Inteligencia de Negocios" data-en="Analytics &amp; Business Intelligence">Analítica e Inteligencia de Negocios</h3>
+      <p data-es="Convertimos tus datos en decisiones con dashboards y sistemas de BI que te dan visibilidad real sobre tu negocio." data-en="We turn your data into decisions with dashboards and BI systems that give you real visibility into your business.">Convertimos tus datos en decisiones con dashboards y sistemas de BI que te dan visibilidad real sobre tu negocio.</p>
+    </div>
+    <div class="sc reveal d3">
+      <div class="sc-num">03</div>
+      <h3 data-es="Automatización de Procesos" data-en="Process Automation">Automatización de Procesos</h3>
+      <p data-es="Identificamos tareas repetitivas y las automatizamos para que tu equipo se enfoque en lo que importa." data-en="We identify time-consuming tasks and automate them so your team can focus on what matters.">Identificamos tareas repetitivas y las automatizamos para que tu equipo se enfoque en lo que importa.</p>
+    </div>
+    <div class="sc reveal d1">
+      <div class="sc-num">04</div>
+      <h3 data-es="Desarrollo de Software a Medida" data-en="Custom Software Development">Desarrollo de Software a Medida</h3>
+      <p data-es="Construimos herramientas y aplicaciones personalizadas que resuelven exactamente el problema de tu negocio." data-en="We build custom tools and applications that solve exactly your business problem.">Construimos herramientas y aplicaciones personalizadas que resuelven exactamente el problema de tu negocio.</p>
+    </div>
+    <div class="sc reveal d2">
+      <div class="sc-num">05</div>
+      <h3 data-es="Estrategia Tecnológica" data-en="Technology Strategy">Estrategia Tecnológica</h3>
+      <p data-es="Te ayudamos a elegir las herramientas correctas y a construir una hoja de ruta que escale con tu empresa." data-en="We help you choose the right tools and build a technology roadmap that scales with your company.">Te ayudamos a elegir las herramientas correctas y a construir una hoja de ruta que escale con tu empresa.</p>
+    </div>
+    <div class="sc reveal d3">
+      <div class="sc-num">06</div>
+      <h3 data-es="Consultoría en Datos" data-en="Data Consulting">Consultoría en Datos</h3>
+      <p data-es="Diseñamos sistemas que ponen la información correcta en las manos correctas para decisiones más rápidas y confiables." data-en="We design systems that put the right information in the right hands for faster, more reliable decisions.">Diseñamos sistemas que ponen la información correcta en las manos correctas para decisiones más rápidas y confiables.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="values">
+  <div class="reveal">
+    <div class="sec-label" data-es="Nuestros Valores" data-en="Our Values">Nuestros Valores</div>
+    <h2><span data-es="Lo que nos define" data-en="What defines us">Lo que nos define</span> <em data-es="como empresa." data-en="as a company.">como empresa.</em></h2>
+  </div>
+  <div class="values-grid">
+    <div class="vc reveal d1"><div class="vn">01</div><h3 data-es="Confiabilidad" data-en="Reliability">Confiabilidad</h3><p data-es="Cumplimos lo que prometemos, siempre." data-en="We deliver on what we promise, always.">Cumplimos lo que prometemos, siempre.</p></div>
+    <div class="vc reveal d2"><div class="vn">02</div><h3 data-es="Innovación"    data-en="Innovation">Innovación</h3><p data-es="Adoptamos nuevas tecnologías para mantenerte competitivo." data-en="We adopt new technologies to keep you competitive.">Adoptamos nuevas tecnologías para mantenerte competitivo.</p></div>
+    <div class="vc reveal d3"><div class="vn">03</div><h3 data-es="Claridad"      data-en="Clarity">Claridad</h3><p data-es="Soluciones simples para problemas complejos." data-en="Simple solutions for complex problems.">Soluciones simples para problemas complejos.</p></div>
+    <div class="vc reveal d4"><div class="vn">04</div><h3 data-es="Integridad"    data-en="Integrity">Integridad</h3><p data-es="Transparencia y respeto en cada proyecto." data-en="Transparency and respect in every project.">Transparencia y respeto en cada proyecto.</p></div>
+    <div class="vc reveal d1"><div class="vn">05</div><h3 data-es="Crecimiento"   data-en="Growth">Crecimiento</h3><p data-es="Tu éxito es nuestra medida de éxito." data-en="Your success is our measure of success.">Tu éxito es nuestra medida de éxito.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="sec-label" data-es="Contacto" data-en="Contact">Contacto</div>
+    <h2><span data-es="Hablemos sobre" data-en="Let's talk about">Hablemos sobre</span> <em data-es="tu proyecto." data-en="your project.">tu proyecto.</em></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <p data-es="¿Tienes un desafío tecnológico? Escríbenos y te respondemos en menos de 24 horas." data-en="Have a technology challenge? Write to us and we'll respond within 24 hours.">¿Tienes un desafío tecnológico? Escríbenos y te respondemos en menos de 24 horas.</p>
+      <div class="cinfo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1" stroke="#3ecfcf" stroke-width="1.3"/><polyline points="1,4 8,9 15,4" stroke="#3ecfcf" stroke-width="1.2"/></svg>
+        <span>contacto@atlassolutions.com</span>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="form-row">
+        <div class="form-group"><label data-es="Nombre" data-en="Name">Nombre</label><input type="text" id="ph-name" placeholder="Juan"/></div>
+        <div class="form-group"><label data-es="Empresa" data-en="Company">Empresa</label><input type="text" id="ph-company" placeholder="Tu empresa"/></div>
+      </div>
+      <div class="form-group"><label data-es="Correo" data-en="Email">Correo</label><input type="email" id="ph-email" placeholder="juan@empresa.com"/></div>
+      <div class="form-group">
+        <label data-es="Servicio de interés" data-en="Service of interest">Servicio de interés</label>
+        <select id="sel-service">
+          <option value="" disabled selected data-es="Selecciona uno..." data-en="Select one...">Selecciona uno...</option>
+          <option data-es="Transformación Digital"                   data-en="Digital Transformation">Transformación Digital</option>
+          <option data-es="Analítica e Inteligencia de Negocios"     data-en="Analytics &amp; Business Intelligence">Analítica e Inteligencia de Negocios</option>
+          <option data-es="Automatización de Procesos"               data-en="Process Automation">Automatización de Procesos</option>
+          <option data-es="Desarrollo de Software"                   data-en="Software Development">Desarrollo de Software</option>
+          <option data-es="Estrategia Tecnológica"                   data-en="Technology Strategy">Estrategia Tecnológica</option>
+          <option data-es="Consultoría en Datos"                     data-en="Data Consulting">Consultoría en Datos</option>
+        </select>
+      </div>
+      <div class="form-group"><label data-es="Mensaje" data-en="Message">Mensaje</label><textarea id="ph-msg" rows="4" placeholder="Cuéntanos brevemente..."></textarea></div>
+      <button class="btn-submit" id="submitBtn" data-es="Enviar Mensaje →" data-en="Send Message →">Enviar Mensaje →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Atlas<span>.</span> Solutions</div>
+  <p data-es="© 2025 Atlas Solutions. Todos los derechos reservados." data-en="© 2025 Atlas Solutions. All rights reserved.">© 2025 Atlas Solutions. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+var lang = 'es';
+function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+function setLang(l) {
+  lang = l;
+  document.getElementById('btnES').classList.toggle('active', l === 'es');
+  document.getElementById('btnEN').classList.toggle('active', l === 'en');
+  document.querySelectorAll('[data-es]').forEach(function(el) {
+    var t = el.getAttribute('data-' + l);
+    if (!t) return;
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { el.placeholder = t; }
+    else if (el.tagName === 'OPTION') { el.textContent = t; }
+    else { el.innerHTML = t; }
+  });
+  var ph = {
+    es: { name:'Juan', company:'Tu empresa', email:'juan@empresa.com', msg:'Cuéntanos brevemente...' },
+    en: { name:'John', company:'Your company', email:'john@company.com', msg:'Tell us briefly...' }
+  }[l];
+  document.getElementById('ph-name').placeholder    = ph.name;
+  document.getElementById('ph-company').placeholder = ph.company;
+  document.getElementById('ph-email').placeholder   = ph.email;
+  document.getElementById('ph-msg').placeholder     = ph.msg;
+}
+// Navbar scroll
+var nb = document.getElementById('navbar');
+window.addEventListener('scroll', function() { nb.classList.toggle('scrolled', window.scrollY > 60); });
+// Reveal on scroll
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+// Form submit
+document.getElementById('submitBtn').addEventListener('click', function() {
+  var btn = this;
+  var sentTxt  = lang === 'es' ? '¡Mensaje enviado! ✓' : 'Message sent! ✓';
+  var resetTxt = lang === 'es' ? 'Enviar Mensaje →'    : 'Send Message →';
+  btn.textContent = sentTxt;
+  btn.classList.add('sent');
+  setTimeout(function() { btn.textContent = resetTxt; btn.classList.remove('sent'); }, 3000);
+});
+</script>
+</body>
+</html>
