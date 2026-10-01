@@ -1,0 +1,11 @@
+services:
+  atlas-bot:
+    build: ./bot
+    container_name: atlas-bot
+    restart: unless-stopped
+    env_file: .env.bot
+    mem_limit: 256m
+    cpus: 0.5
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
