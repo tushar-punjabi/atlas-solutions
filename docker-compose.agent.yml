@@ -1,0 +1,28 @@
+services:
+  atlas-agent:
+    build: ./agent
+    container_name: atlas-agent
+    restart: unless-stopped
+    env_file: .env.agent
+    environment:
+      - CODEX_UNSAFE_ALLOW_NO_SANDBOX=1
+    volumes:
+      - ./jobs:/jobs
+      - ./agent/AGENTS.md:/home/node/AGENTS.md:ro
+      - ./agent/run-job.sh:/home/node/run-job.sh:ro
+      - ./agent/worker.sh:/home/node/worker.sh:ro
+      - ./agent/entrypoint.sh:/home/node/entrypoint.sh:ro
+      - ${HOME}/.codex/auth.json:/mnt/codex-auth/auth.json:ro
+    mem_limit: 2g
+    cpus: 1.5
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - atlas-net
+    logging:
+      driver: json-file
+      options: { max-size: "20m", max-file: "3" }
+
+networks:
+  atlas-net:
+    external: true

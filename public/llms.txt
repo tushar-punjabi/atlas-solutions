@@ -1,0 +1,73 @@
+# Atlas Solutions
+
+Atlas Solutions es una empresa tecnológica chilena enfocada en desarrollo de software, ingeniería de datos, automatización de procesos, integración de sistemas e infraestructura tecnológica.
+
+Sitio web oficial:
+https://atlasolutions.cl
+
+## Servicios principales
+
+- Desarrollo de software a medida
+- Ingeniería de datos
+- Pipelines ETL y ELT
+- Automatización de procesos empresariales
+- Integración de APIs
+- Integración entre plataformas y sistemas
+- Dashboards y analítica
+- Monitoreo de infraestructura
+- Herramientas internas para empresas
+- Integraciones de inteligencia artificial
+- Automatización con modelos de lenguaje
+
+## Mercado
+
+Atlas Solutions presta servicios principalmente en Chile.
+
+Áreas geográficas relevantes:
+
+- Iquique
+- Región de Tarapacá
+- Santiago
+- Chile
+
+## Capacidades técnicas
+
+- Python
+- TypeScript
+- JavaScript
+- React
+- Next.js
+- Django
+- FastAPI
+- PostgreSQL
+- Docker
+- APIs REST
+- ETL
+- ELT
+- Data Engineering
+- Automatización empresarial
+- Integración de sistemas
+- Inteligencia artificial
+- LLM
+- Monitoreo de infraestructura
+
+## Soluciones
+
+Atlas Solutions desarrolla soluciones como:
+
+- Sistemas de tickets y mesa de ayuda
+- Dashboards de marketing
+- Pipelines de datos
+- Sistemas de monitoreo
+- Automatización de operaciones
+- Integraciones empresariales
+- Herramientas internas
+- Aplicaciones web
+
+## Enlaces oficiales
+
+Sitio web:
+https://atlasolutions.cl
+
+GitHub:
+https://github.com/tushar-punjabi/atlas-solutions

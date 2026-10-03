@@ -1,0 +1,25 @@
+services:
+  atlas-agent:
+    build: ./agent
+    container_name: atlas-agent
+    restart: unless-stopped
+    env_file: .env.agent
+    volumes:
+      - ./jobs:/jobs
+      - ./agent/AGENTS.md:/home/agent/AGENTS.md:ro
+      - ./agent/run-job.sh:/home/agent/run-job.sh:ro
+      - ./agent/worker.sh:/home/agent/worker.sh:ro
+      - ${HOME}/.codex:/home/agent/.codex:ro
+    mem_limit: 2g
+    cpus: 1.5
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - atlas-net
+    logging:
+      driver: json-file
+      options: { max-size: "20m", max-file: "3" }
+
+networks:
+  atlas-net:
+    external: true
