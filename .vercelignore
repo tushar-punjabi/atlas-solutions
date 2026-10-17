@@ -1,0 +1,6 @@
+bot/
+_legacy/
+.env.bot
+.env*.local
+docker-compose*.yml
+.github/
